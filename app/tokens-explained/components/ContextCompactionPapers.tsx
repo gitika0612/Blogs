@@ -1,13 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AnimatePresence, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { DeskSurface, Sheet } from "./PaperSheet";
 
 type SheetSize = "full" | "thumbnail";
 type Piece = { key: string; size: SheetSize; isNew?: boolean };
 
 const GENTLE_TRANSITION = { type: "spring", stiffness: 170, damping: 26 } as const;
+const STAGE_DURATIONS = [1400, 1800, 2800];
 
 function buildStages(cycle: number): Piece[][] {
   const p = `c${cycle}`;
@@ -40,60 +41,54 @@ function rotateFor(index: number) {
 }
 
 function ContextCompactionPapersAnimation() {
+  const [inView, setInView] = useState(false);
   const [cycle, setCycle] = useState(0);
   const [stageIndex, setStageIndex] = useState(0);
 
   useEffect(() => {
-    const stageDurations = [1500, 1700, 3200];
-    let cancelled = false;
-    let timer: ReturnType<typeof setTimeout>;
-
-    const advance = (index: number) => {
-      timer = setTimeout(
-        () => {
-          if (cancelled) return;
-          if (index >= stageDurations.length - 1) {
-            setCycle((c) => c + 1);
-            setStageIndex(0);
-            advance(0);
-          } else {
-            setStageIndex(index + 1);
-            advance(index + 1);
-          }
-        },
-        stageDurations[index],
-      );
-    };
-
-    advance(0);
-
-    return () => {
-      cancelled = true;
-      clearTimeout(timer);
-    };
-  }, []);
+    if (!inView) return;
+    const isLast = stageIndex >= STAGE_DURATIONS.length - 1;
+    const timer = setTimeout(
+      () => {
+        if (isLast) {
+          setCycle((c) => c + 1);
+          setStageIndex(0);
+        } else {
+          setStageIndex((i) => i + 1);
+        }
+      },
+      STAGE_DURATIONS[stageIndex],
+    );
+    return () => clearTimeout(timer);
+  }, [inView, cycle, stageIndex]);
 
   const pieces = buildStages(cycle)[stageIndex];
 
   return (
-    <DeskSurface>
-      <AnimatePresence mode="popLayout">
-        {pieces.map((piece, i) => (
-          <Sheet
-            key={piece.key}
-            size={piece.size}
-            rotate={rotateFor(i)}
-            initial={
-              piece.isNew
-                ? { opacity: 0, y: -22, rotate: 6 }
-                : { opacity: 0, scale: 0.7 }
-            }
-            exit={{ opacity: 0, scale: 0.6 }}
-            transition={GENTLE_TRANSITION}
-          />
-        ))}
-      </AnimatePresence>
-    </DeskSurface>
+    <motion.div
+      onViewportEnter={() => setInView(true)}
+      onViewportLeave={() => setInView(false)}
+      viewport={{ margin: "-80px" }}
+    >
+      <DeskSurface>
+        <AnimatePresence mode="popLayout">
+          {pieces.map((piece, i) => (
+            <Sheet
+              key={piece.key}
+              size={piece.size}
+              rotate={rotateFor(i)}
+              initial={
+                piece.isNew
+                  ? { opacity: 0, y: -22, rotate: 6 }
+                  : { opacity: 0, scale: 0.7 }
+              }
+              exit={{ opacity: 0, scale: 0.6 }}
+              transition={GENTLE_TRANSITION}
+            />
+          ))}
+        </AnimatePresence>
+      </DeskSurface>
+    </motion.div>
   );
 }
 

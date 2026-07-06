@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Fraunces } from "next/font/google";
 import ScrollProgressBar from "../sessions-jwt-oauth/components/ScrollProgressBar";
 import ScrollCue from "../sessions-jwt-oauth/components/ScrollCue";
@@ -11,6 +12,7 @@ import NumberSplit from "./components/NumberSplit";
 import EmojiCostCompare from "./components/EmojiCostCompare";
 import ContextWindowPapers from "./components/ContextWindowPapers";
 import ContextCompactionPapers from "./components/ContextCompactionPapers";
+import TokenizerPlayground from "./components/TokenizerPlayground";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -58,10 +60,11 @@ export default function TokensExplainedPage() {
 
         <Reveal delay={0.2}>
           <p className="mt-8 max-w-2xl text-lg leading-relaxed text-[#5B564C] sm:text-xl">
-            This emoji 🫵 costs an AI 3 tokens. This one 🎈 costs 2. And
-            &apos;hello&apos; costs 1 &mdash; but &apos;hellooo&apos; costs 2.
-            If none of that makes sense yet, you don&apos;t really know what a
-            token is. Let&apos;s fix that.
+            Here&apos;s something strange: to an AI, a single emoji can cost
+            more than the word &apos;hello&apos;. That&apos;s because AI
+            doesn&apos;t read letters or words &mdash; it reads tokens. And
+            once you understand tokens, a lot of AI&apos;s weird behaviour
+            suddenly makes sense.
           </p>
         </Reveal>
 
@@ -346,12 +349,12 @@ export default function TokensExplainedPage() {
 
           <Reveal delay={0.25}>
             <p className="mx-auto mt-10 max-w-xl text-center text-lg leading-relaxed text-[#5B564C]">
-              Instead of letting old pages fall off, context compaction
-              shrinks them &mdash; summarising old messages into a compact form
-              while keeping the gist. Recent messages stay full and detailed;
-              distant ones become tiny summaries. Not all context has equal
-              value &mdash; what happened two messages ago usually matters more
-              than what happened twenty ago.
+              Instead of letting old pages fall off, context compaction shrinks
+              them &mdash; summarising old messages into a compact form while
+              keeping the gist. Recent messages stay full and detailed; distant
+              ones become tiny summaries. Not all context has equal value
+              &mdash; what happened two messages ago usually matters more than
+              what happened twenty ago.
             </p>
           </Reveal>
 
@@ -364,6 +367,95 @@ export default function TokensExplainedPage() {
             </p>
           </Reveal>
         </div>
+      </section>
+
+      {/* Scene 5 — Try it yourself */}
+      <section className="mx-auto max-w-6xl px-6 py-24 sm:py-32">
+        <Reveal>
+          <span className="mb-4 inline-block text-sm font-medium uppercase tracking-[0.14em] text-[#B8860B] sm:text-base">
+            Your turn
+          </span>
+        </Reveal>
+
+        <Reveal delay={0.05}>
+          <h2
+            className={`${fraunces.className} max-w-3xl text-3xl leading-tight tracking-tight text-[#1C1810] sm:text-4xl md:text-5xl`}
+          >
+            See your own words become tokens.
+          </h2>
+        </Reveal>
+
+        <Reveal delay={0.1}>
+          <p className="mx-auto mt-6 max-w-xl text-center text-lg leading-relaxed text-[#5B564C]">
+            You&apos;ve seen how it works &mdash; now watch it happen to
+            anything you type. Enter some text and see it break into tokens,
+            live.
+          </p>
+        </Reveal>
+
+        <Reveal delay={0.2}>
+          <div className="mt-14">
+            <TokenizerPlayground />
+          </div>
+        </Reveal>
+      </section>
+
+      {/* Scene 6 — Recap + close */}
+      <section className="mx-auto max-w-6xl px-6 py-24 sm:py-32">
+        <Reveal>
+          <h2
+            className={`${fraunces.className} max-w-3xl text-3xl leading-tight tracking-tight text-[#1C1810] sm:text-4xl md:text-5xl`}
+          >
+            So, what&apos;s a token?
+          </h2>
+        </Reveal>
+
+        <div className="mt-12 space-y-6">
+          <Reveal delay={0.1}>
+            <p className="mx-auto max-w-2xl text-center text-lg leading-relaxed text-[#3A3630] sm:text-xl">
+              A <span className="text-[#B8860B]">token </span> is a chunk
+              &mdash; not a letter, not a word. Common things are cheap (1
+              brick); rare things shatter into many.
+            </p>
+          </Reveal>
+
+          <Reveal delay={0.18}>
+            <p className="mx-auto max-w-2xl text-center text-lg leading-relaxed text-[#3A3630] sm:text-xl">
+              Everything the model sees is tokens &mdash; your text becomes a{" "}
+              <span className="text-[#B8860B]">list of numbers</span> it reads,
+              and re-reads, every single turn.
+            </p>
+          </Reveal>
+
+          <Reveal delay={0.26}>
+            <p className="mx-auto max-w-2xl text-center text-lg leading-relaxed text-[#3A3630] sm:text-xl">
+              Tokens are the{" "}
+              <span className="text-[#B8860B]">currency of AI</span>: they set
+              the cost, the speed, and how much the model can remember at once.
+            </p>
+          </Reveal>
+        </div>
+
+        <Reveal delay={0.36}>
+          <p
+            className={`${fraunces.className} mx-auto mt-12 max-w-2xl text-center text-xl italic leading-snug text-[#1C1810] sm:text-2xl`}
+          >
+            Next time an AI &apos;forgets&apos;, or a reply costs more than you
+            expected &mdash; now you know why. It was always about the bricks.
+          </p>
+        </Reveal>
+
+        <Reveal delay={0.45}>
+          <footer className="mt-20 flex flex-col items-start gap-2 border-t border-[#B8860B]/20 pt-8 text-sm text-[#5B564C] sm:flex-row sm:items-center sm:justify-between">
+            <span>Written by Gitika</span>
+            <Link
+              href="/"
+              className="text-[#B8860B] transition-colors hover:text-[#1C1810]"
+            >
+              ← More stories
+            </Link>
+          </footer>
+        </Reveal>
       </section>
     </main>
   );

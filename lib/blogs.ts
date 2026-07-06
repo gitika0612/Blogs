@@ -73,7 +73,7 @@ export const posts: Post[] = [
     slug: "tokens-explained",
     title: "Tokens Explained: The Currency of AI",
     teaser:
-      "This emoji costs an AI 3 tokens. 'hello' costs 1, but 'hellooo' costs 2. Here's why AI doesn't read the way you think.",
+      "To an AI, a single emoji can cost more than the word 'hello'. Here's why AI doesn't read letters or words — it reads tokens.",
     category: "ai",
     tag: "LLM Fundamentals",
     readTime: "7 min read",
