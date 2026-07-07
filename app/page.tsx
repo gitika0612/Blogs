@@ -38,8 +38,8 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#FAF6F0] font-sans text-[#1C1810] selection:bg-[#1E3A6D] selection:text-white">
-      <section className="mx-auto max-w-5xl px-6 pb-16 pt-20 text-center sm:pt-28">
+    <main className="min-h-dvh bg-[#FAF6F0] font-sans text-[#1C1810] selection:bg-[#1E3A6D] selection:text-white">
+      <section className="mx-auto max-w-5xl px-6 pb-[clamp(1.5rem,5vh,4rem)] pt-[clamp(2rem,7vh,7rem)] text-center">
         <Reveal>
           <span className="mb-6 inline-block text-sm font-medium uppercase tracking-[0.14em] text-[#1E3A6D] sm:text-base">
             By Gitika
@@ -61,7 +61,7 @@ export default function Home() {
         </Reveal>
       </section>
 
-      <section className="mx-auto max-w-5xl px-6 pb-20">
+      <section className="mx-auto max-w-5xl px-6 pb-[clamp(1.5rem,5vh,5rem)]">
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:gap-8 lg:grid-cols-3">
           {visibleCategories.map((category, index) => {
             const count = getPublishedPostsByCategory(category.slug).length;
