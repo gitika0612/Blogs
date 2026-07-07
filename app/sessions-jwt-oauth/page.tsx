@@ -40,7 +40,7 @@ export default function SessionsJwtOAuthPage() {
       <ScrollProgressBar />
 
       {/* Hero */}
-      <section className="relative flex min-h-[100svh] flex-col items-center justify-center px-6 text-center">
+      <section className="relative flex min-h-[100svh] flex-col items-center justify-center px-6 pt-[max(1.5rem,env(safe-area-inset-top))] text-center sm:pt-[env(safe-area-inset-top)]">
         <Reveal>
           <span className="mb-6 inline-block text-sm font-medium uppercase tracking-[0.14em] text-[#1E3A6D] sm:text-base">
             Authentication, told as a story

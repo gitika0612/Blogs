@@ -13,8 +13,7 @@ export default function ScrollProgressBar() {
   return (
     <div
       aria-hidden
-      className="fixed inset-x-0 top-0 z-50 bg-[#FAF6F0]"
-      style={{ paddingTop: "env(safe-area-inset-top)" }}
+      className="fixed inset-x-0 top-0 z-50 bg-[#FAF6F0] pt-[max(1.25rem,env(safe-area-inset-top))] sm:pt-[env(safe-area-inset-top)]"
     >
       <motion.div
         className="h-[3px] origin-left bg-[#1E3A6D]"
