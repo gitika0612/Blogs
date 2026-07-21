@@ -79,6 +79,16 @@ export const posts: Post[] = [
     readTime: "7 min read",
     published: true,
   },
+  {
+    slug: "embeddings-explained",
+    title: "Embeddings Explained: How AI Understands Meaning",
+    teaser:
+      "Tokens turned your words into numbers. But how does AI know 'king' and 'queen' are related — and 'banana' isn't? Meaning becomes a map.",
+    category: "ai",
+    tag: "LLM Fundamentals",
+    readTime: "8 min read",
+    published: true,
+  },
 ];
 
 export function getCategoryBySlug(slug: string): Category | undefined {
